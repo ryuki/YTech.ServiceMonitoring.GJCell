@@ -1,0 +1,257 @@
+﻿@{
+    ViewBag.Title = "Daftar Permintaan Spare Part";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+
+    .k-Terima {
+        background-image: url('Content/img/window16.gif');
+    }
+
+    .k-Retur {
+        background-image: url('Content/img/generic_link_16.png');
+    }
+</style>
+
+@(Html.Kendo()
+.Grid<YTech.SIS.GJCell.Web.Mvc.Controllers.ViewModels.RequestWOSPartViewModel>()
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.WONo).Width("auto").Title("No WO");
+        columns.Bound(p => p.WOSPartRequestBy).Width("auto");
+        columns.Bound(p => p.WOSPartDate).Width("auto").Format("{0:dd-MMM-yy}").Title("Tgl Request");
+        columns.Bound(p => p.SPartId).Width("auto").Title("Kode Spare Part");
+        columns.Bound(p => p.SPartName).Width("auto").Title("Spare Part");
+        columns.Bound(p => p.WOSPartQty).Width("auto").Format("{0:N2}");
+        columns.Bound(p => p.WOSPartPrice).Width("auto").Format("{0:N2}");
+        columns.Bound(p => p.WOSPartDisc).Width("auto").Format("{0:N2}");
+        columns.Bound(p => p.WOSPartTotal).Width("auto").Format("{0:N2}");
+        columns.Command(command =>
+        {
+            command.Custom("Terima").Click("WOSPartReceived").HtmlAttributes(new { style = "min-width:20px;" });
+            command.Custom("Retur").Click("WOSPartRetur").HtmlAttributes(new { style = "min-width:20px;" });
+        })
+            .Width("215px");
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .ColumnMenu()
+    .Selectable()
+    .Filterable()
+    .Groupable()
+    .Resizable(resize => resize.Columns(true))
+    .Reorderable(reorder => reorder.Columns(true))
+    .HtmlAttributes(new { style = "height:500px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Batch(false)
+        .ServerOperation(false)
+        .Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+        .Model(model =>
+            {
+                model.Id(p => p.WOSPartId);
+                model.Field(p => p.SPartName).Editable(false);
+            }
+        )
+        .Create(create => create.Action("WOSPart_Create", "WOSPart"))
+        .Read(read => read.Action("WOSPart_Read", "WOSPart"))
+        .Update(update => update.Action("WOSPart_Update", "WOSPart"))
+        .Destroy(destroy => destroy.Action("WOSPart_Destroy", "WOSPart"))
+    )
+    .Events(e => e.DataBound("onDataBound"))
+    )
+
+<script type="text/kendo-template" id="message">
+<div class="k-widget k-tooltip k-tooltip-validation k-invalid-msg field-validation-error" style="margin: 0.5em; display: block; " data-for="#=field#" data-valmsg-for="#=field#" id="#=field#_validationMessage">
+            <span class="k-icon k-warning"> </span>#=message#<div class="k-callout k-callout-n"></div></div>
+</script>
+
+@(Html.Kendo().Window()
+    .Name("changeStatus")
+    .Title("Status")
+     .Content(@<text>
+@Html.Action("ChangeStatus","WOSPart")
+</text>)
+    .Draggable()
+    .Resizable()
+    .Width(300)
+    .Height(350)
+    .Modal(true)
+    .Visible(false)
+)
+
+<script type="text/javascript">
+    function onRequestEnd(e) {
+        //RequestEnd handler code
+        //bug : error when update after insert new data, no id catched
+        //bug fix : refresh after insert new data, 
+        if (e.type === "create") {
+            //alert("onRequestEnd");
+            //check for errors in the response
+            if (e.response == null || e.response.Errors == null) {
+                //refresh grid if no errors
+                $('#Grid').data().kendoGrid.dataSource.read();
+            }
+        }
+    }
+
+    function onDataBound(e) {
+        //edit data when double click
+        $('#Grid tbody tr').dblclick(function () {
+            var grid = $('#Grid').data().kendoGrid;
+            grid.editRow(this);
+        })
+    }
+    jQuery(document).ready(function () {
+        //auto click add new customer when iframe = 1
+        if (getURLParameter("isModal") === "True") {
+            //$("a.k-grid-add").trigger("click");
+            setTimeout('$("a.k-grid-add").trigger("click");', 3000);
+        }
+        
+        $('#btnSubmitChangeStatus').click(function () {
+            //alert('formWOSPartStatusChange submit');
+            var formWOSPart = $('#formWOSPartStatusChange');
+            //if ($(formMutation).valid()) {
+            //alert('formMutation valid');
+            //alert(formMutation.serialize());
+
+            var woSPartUrl = '@(Url.Action("ChangeStatus", "WOSPart", new { random = DateTime.Now.ToFileTimeUtc().ToString() }))';
+             //alert(woMutationUrl);
+            $.ajax({
+                url: woSPartUrl,
+                type: 'POST',
+                data: $(formWOSPart).serialize(),
+                success: function (result) {
+                    //alert(result);
+                    //$('#result').html(result);
+
+                    //close mutation window
+                    $("#changeStatus").data("kendoWindow").close();
+                    //call refresh grid
+                    var grid = $("#Grid").data("kendoGrid");
+                    grid.dataSource.read();
+
+                }
+            });
+             //}
+            return false;
+         });
+        $('#btnCancelChangeStatus').click(function () {
+            //alert("test");
+            //close mutation window
+            $("#changeStatus").data("kendoWindow").close();
+            //call refresh grid
+            var grid = $("#Grid").data("kendoGrid");
+            grid.dataSource.read();
+        });
+    })
+
+    function getURLParameter(name) {
+        return decodeURI(
+            (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
+        );
+    }
+
+
+    function onSPartChange() {
+        var spart = $('#SPart').data('kendoDropDownList').value();
+        //call set price of spart
+        var getSPartUrl = '@(Url.Action("GetSPart", "SPart", new { random = DateTime.Now.ToFileTimeUtc().ToString() }))' + '&sPartId=' + spart;
+        $.ajax({
+            type: 'POST',
+            url: getSPartUrl,
+            error: function (response) {
+                alert("error: " + response);
+            }, success: function (response) {
+                //alert(response.SPartServicePrice1);
+                $('#SPartPrice').data('kendoNumericTextBox').value(response.SPartServicePrice1);
+                CalculateSPartTotal();
+            }
+        });
+    }
+    function CalculateSPartTotal() {
+        var qty = $('#SPartQty').data('kendoNumericTextBox').value();
+        var price = $('#SPartPrice').data('kendoNumericTextBox').value();
+        var total = qty * price;
+        $('#SPartTotal').data('kendoNumericTextBox').value(total);
+    }
+
+    //show server errors if any
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+
+            var grid = $('#Grid').data('kendoGrid');
+
+            grid.one("dataBinding", function (e) {
+                e.preventDefault();   // cancel grid rebind
+            });
+            //var gridElement = grid.editable.element;
+
+            //var validationMessageTemplate = kendo.template(
+            //    "<div id='#=field#_validationMessage' " +
+            //        "class='k-widget k-tooltip k-tooltip-validation " +
+            //            "k-invalid-msg field-validation-error' " +
+            //        "style='margin: 0.5em;' data-for='#=field#' " +
+            //        "data-val-msg-for='#=field#' role='alert'>" +
+            //        "<span class='k-icon k-warning'></span>" +
+            //        "#=message#" +
+            //        "<div class='k-callout k-callout-n'></div>" +
+            //    "</div>");
+
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                    //gridElement.find("[data-valmsg-for=" + key + "],[data-val-msg-for=" + key + "]")
+                    //.replaceWith(validationMessageTemplate({ field: key, message: value.errors[0] }));
+                    //gridElement.find("input[name=" + key + "]").focus();
+                }
+            });
+            alert(message);
+        }
+    }
+
+    function WOSPartReceived(e) {
+        e.preventDefault();
+
+        //set datasource for print WO
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var woId = dataItem.WOSPartId;
+        //alert("woId=" + woId);
+        $("#WOSPartId").val(woId);
+
+        ResetAndOpenStatusChange("Serah_Terima_dan_Gunakan");
+    }
+
+    function WOSPartRetur(e) {
+        e.preventDefault();
+
+        //set datasource for print WO
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var woId = dataItem.WOSPartId;
+        $("#WOSPartId").val(woId);
+
+        //$("#changeStatus").data("kendoWindow").content("loading...").refresh('@Url.Action("ChangeStatus","WOSPart")');
+        ResetAndOpenStatusChange("Retur");
+    }
+
+    function ResetAndOpenStatusChange(status) {
+        //$("#changeStatus").data("kendoWindow").content("loading...").refresh('@Url.Action("ChangeStatus","WOSPart")'); --> could not call this function, all function not run after call this
+
+        $("#WOSPartStatus").data("kendoDropDownList").value(status);
+        $("#WOSPartDateReceived").data("kendoDatePicker").value("");
+        $("#WOSPartReceivedBy").data("kendoDropDownList").value("");
+
+
+        $("#changeStatus").data("kendoWindow").center();
+        $("#changeStatus").data("kendoWindow").open();
+
+    }
+</script>

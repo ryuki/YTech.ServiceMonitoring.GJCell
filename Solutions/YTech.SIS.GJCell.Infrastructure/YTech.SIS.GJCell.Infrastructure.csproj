@@ -108,11 +108,46 @@
     <Compile Include="NHibernateMaps\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\TableNameConvention.cs" />
     <Compile Include="NHibernateMaps\AutoPersistenceModelGenerator.cs" />
+    <Compile Include="NHibernateMaps\MCityMap.cs" />
+    <Compile Include="NHibernateMaps\TWOEmpMap.cs" />
+    <Compile Include="NHibernateMaps\TWOSPartMap.cs" />
+    <Compile Include="NHibernateMaps\VWoByEmpMap.cs" />
+    <Compile Include="NHibernateMaps\MCustomerMap.cs" />
+    <Compile Include="NHibernateMaps\MEmpMap.cs" />
+    <Compile Include="NHibernateMaps\MEquipMap.cs" />
+    <Compile Include="NHibernateMaps\MMerkMap.cs" />
+    <Compile Include="NHibernateMaps\MSPartMap.cs" />
+    <Compile Include="NHibernateMaps\MTypeMap.cs" />
+    <Compile Include="NHibernateMaps\TReferenceMap.cs" />
+    <Compile Include="NHibernateMaps\TWOHaveReadMap.cs" />
+    <Compile Include="NHibernateMaps\TWOLogMap.cs" />
+    <Compile Include="NHibernateMaps\TWOMap.cs" />
+    <Compile Include="NHibernateMaps\TWOStatusMap.cs" />
+    <Compile Include="NHibernateMaps\TWOTrackMap.cs" />
+    <Compile Include="Repository\MCityRepository.cs" />
+    <Compile Include="Repository\MCustomerRepository.cs" />
+    <Compile Include="Repository\MEmpRepository.cs" />
+    <Compile Include="Repository\MEquipRepository.cs" />
+    <Compile Include="Repository\MMerkRepository.cs" />
+    <Compile Include="Repository\MSPartRepository.cs" />
+    <Compile Include="Repository\MTypeRepository.cs" />
+    <Compile Include="Repository\TReferenceRepository.cs" />
+    <Compile Include="Repository\TWOEmpRepository.cs" />
+    <Compile Include="Repository\TWOEquipRepository.cs" />
+    <Compile Include="Repository\TWOLogRepository.cs" />
+    <Compile Include="Repository\TWORepository.cs" />
+    <Compile Include="Repository\TWOSPartRepository.cs" />
+    <Compile Include="Repository\TWOStatusRepository.cs" />
+    <Compile Include="Repository\TWOTrackRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YTech.SIS.GJCell.Domain\YTech.SIS.GJCell.Domain.csproj">
       <Project>{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}</Project>
       <Name>YTech.SIS.GJCell.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YTech.SIS.GJCell.Enums\YTech.SIS.GJCell.Enums.csproj">
+      <Project>{9984c887-0804-4e94-9f26-56517ae8429a}</Project>
+      <Name>YTech.SIS.GJCell.Enums</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

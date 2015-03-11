@@ -1,0 +1,38 @@
+﻿@model YTech.SIS.GJCell.Web.Mvc.Controllers.ViewModels.RequestWOSPartViewModel
+
+@using (Html.BeginForm("ChangeStatus", "WOSPart", FormMethod.Post, new { id = "formWOSPartStatusChange" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.WOSPartId)
+    
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WOSPartStatus)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WOSPartStatus)
+            @Html.ValidationMessageFor(model => model.WOSPartStatus)
+        </div>
+    
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WOSPartDateReceived)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WOSPartDateReceived)
+            @Html.ValidationMessageFor(model => model.WOSPartDateReceived)
+        </div>
+    
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WOSPartReceivedBy)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WOSPartReceivedBy)
+            @Html.ValidationMessageFor(model => model.WOSPartReceivedBy)
+        </div>
+        <p>
+            @*<input type="submit" value="Submit" />*@
+            <a class="k-button k-button-icontext k-grid-update" style="min-width:20px;" href="#" id="btnSubmitChangeStatus"><span class="k-icon k-update" ></span>Update</a>
+            <a class="k-button k-button-icontext k-grid-cancel" style="min-width:20px;" href="#" id="btnCancelChangeStatus"><span class="k-icon k-cancel" ></span>Cancel</a>
+        </p>
+    <div id="result"></div>
+}
+

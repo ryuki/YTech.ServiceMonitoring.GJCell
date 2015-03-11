@@ -1,0 +1,190 @@
+﻿@{
+    ViewBag.Title = "Daftar Mutasi Unit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@(Html.Kendo()
+.Grid<YTech.SIS.GJCell.Web.Mvc.Controllers.ViewModels.WOViewModel>()
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.WONo).Width("85px");
+        columns.Bound(p => p.CustomerName).Width("auto");
+        columns.Bound(p => p.WODate).Format("{0:dd-MMM-yy}").Width("auto");
+        columns.Bound(p => p.MerkName).Width("auto");
+        columns.Bound(p => p.WOUnitName).Width("auto");
+        columns.Bound(p => p.WOUnitSn).Width("auto");
+        columns.Bound(p => p.WOStartDate).Format("{0:dd-MMM-yy}").Width("auto");
+        columns.Bound(p => p.WOLastStatus).Width("auto");
+        columns.Bound(p => p.WOEstFinishDate).Format("{0:dd-MMM-yy HH:mm}").Width("auto");
+        columns.Bound(p => p.WOTakenDate).Format("{0:dd-MMM-yy}").Width("auto");
+        columns.Bound(p => p.WOInvoiceNo).Width("auto");
+        columns.Bound(p => p.WOTrackTo).Width("auto");
+        columns.Command(command =>
+        {
+            command.Custom("Konfirmasi").Click("ConfirmMutation").HtmlAttributes(new { style = "min-width:20px;" });
+        }).Width("auto");
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Custom().Text("Konfirmasi Penerimaan Unit").HtmlAttributes(new { onclick = "confirmWOMutation(this)", href = "#" });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).Window(win => win.Width(450)))
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .ColumnMenu()
+    .Selectable(s => s.Mode(GridSelectionMode.Multiple).Type(GridSelectionType.Row).Enabled(true))
+    .Filterable()
+    .Groupable()
+    .Resizable(resize => resize.Columns(true))
+    .Reorderable(reorder => reorder.Columns(true))
+    .HtmlAttributes(new { style = "height:500px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Batch(false)
+        .ServerOperation(false)
+        .Events(events => events.Error("error_handler").RequestEnd("onRequestEnd"))
+        .Model(model =>
+            {
+                model.Id(p => p.WOID);
+                model.Field(p => p.MerkName).Editable(false);
+            }
+        )
+        .Read(read => read.Action("ApproveWOMutation_Read", "WO"))
+    )
+        )
+<script type="text/kendo-template" id="message">
+<div class="k-widget k-tooltip k-tooltip-validation k-invalid-msg field-validation-error" style="margin: 0.5em; display: block; " data-for="#=field#" data-valmsg-for="#=field#" id="#=field#_validationMessage">
+            <span class="k-icon k-warning"> </span>#=message#<div class="k-callout k-callout-n"></div></div>
+</script>
+
+<script type="text/javascript">
+    function onRequestEnd(e) {
+        //RequestEnd handler code
+        //bug : error when update after insert new data, no id catched
+        //bug fix : refresh after insert new data, 
+        if (e.type === "create") {
+            //alert("onRequestEnd");
+            //check for errors in the response
+            if (e.response == null || e.response.Errors == null) {
+                //refresh grid if no errors
+                $('#Grid').data().kendoGrid.dataSource.read();
+            }
+        }
+    }
+
+    function onDataBound(e) {
+        //edit data when double click
+        $('#Grid tbody tr').dblclick(function () {
+            var grid = $('#Grid').data().kendoGrid;
+            grid.editRow(this);
+        })
+    }
+    jQuery(document).ready(function () {
+        //auto click add new customer when iframe = 1
+        if (getURLParameter("isModal") === "True") {
+            //$("a.k-grid-add").trigger("click");
+            setTimeout('$("a.k-grid-add").trigger("click");', 3000);
+        }
+    })
+
+    function getURLParameter(name) {
+        return decodeURI(
+            (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
+        );
+    }
+
+    //show server errors if any
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+
+            var grid = $('#Grid').data('kendoGrid');
+
+            grid.one("dataBinding", function (e) {
+                e.preventDefault();   // cancel grid rebind
+            });
+            //var gridElement = grid.editable.element;
+
+            //var validationMessageTemplate = kendo.template(
+            //    "<div id='#=field#_validationMessage' " +
+            //        "class='k-widget k-tooltip k-tooltip-validation " +
+            //            "k-invalid-msg field-validation-error' " +
+            //        "style='margin: 0.5em;' data-for='#=field#' " +
+            //        "data-val-msg-for='#=field#' role='alert'>" +
+            //        "<span class='k-icon k-warning'></span>" +
+            //        "#=message#" +
+            //        "<div class='k-callout k-callout-n'></div>" +
+            //    "</div>");
+
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                    //gridElement.find("[data-valmsg-for=" + key + "],[data-val-msg-for=" + key + "]")
+                    //.replaceWith(validationMessageTemplate({ field: key, message: value.errors[0] }));
+                    //gridElement.find("input[name=" + key + "]").focus();
+                }
+            });
+            alert(message);
+        }
+    }
+
+    function confirmWOMutation(e) {
+        if (confirm("Anda yakin melakukan konfirmasi semua mutasi unit yang terpilih?")) {
+            var grid = $('#Grid').data('kendoGrid');
+            var rows = grid.select();
+            rows.each(
+                function () {
+                    var record = grid.dataItem($(this));
+                    //alert('Selected : ' + record.WOID);
+                    var woId = record.WOID;
+                    var woTrackId = record.WOTrackId;
+                    //alert(dataItem.WOID);
+                    //alert(dataItem.WOTrackId);
+
+                    //update mutation
+                    MutationWOPOST(woTrackId);
+                }
+            )
+            //reload grid
+            $('#Grid').data().kendoGrid.dataSource.read();
+        }
+    }
+
+    function ConfirmMutation(e) {
+        if (confirm("Anda yakin melakukan konfirmasi mutasi unit?")) {
+
+            e.preventDefault();
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            var woId = dataItem.WOID;
+            var woTrackId = dataItem.WOTrackId;
+            //alert(dataItem.WOID);
+            //alert(dataItem.WOTrackId);
+
+            //update mutation
+            MutationWOPOST(woTrackId);
+
+            //reload grid
+            $('#Grid').data().kendoGrid.dataSource.read();
+        }
+    }
+
+    function MutationWOPOST(woTrackId) {
+var confirmTrackUrl = '@(Url.Action("ApproveWOMutation", "WO", new { random = DateTime.Now.ToFileTimeUtc().ToString() }))' +  '&woTrackId=' + woTrackId;
+
+            $.ajax({
+                type: 'POST',
+                url: confirmTrackUrl,
+                error: function (response) {
+                    alert("error: " + response);
+                }, success: function (response) {
+                    if (!response.Success)
+                        alert("Error : " + response.Message);
+                }
+            });
+    }
+</script>

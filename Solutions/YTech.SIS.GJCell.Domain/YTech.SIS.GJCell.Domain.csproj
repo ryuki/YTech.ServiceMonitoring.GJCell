@@ -66,6 +66,9 @@
     <Reference Include="SharpArch.Domain">
       <HintPath>..\..\ReferencedAssemblies\SharpArchitecture\SharpArch.Domain.dll</HintPath>
     </Reference>
+    <Reference Include="SharpArch.NHibernate">
+      <HintPath>..\..\..\JayaMesin\ReferencedAssemblies\SharpArchitecture\SharpArch.NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
@@ -81,7 +84,56 @@
     <Compile Include="..\..\Common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Contracts\IMCityRepository.cs" />
+    <Compile Include="Contracts\IMCustomerRepository.cs" />
+    <Compile Include="Contracts\IMEmpRepository.cs" />
+    <Compile Include="Contracts\IMEquipRepository.cs" />
+    <Compile Include="Contracts\IMMerkRepository.cs" />
+    <Compile Include="Contracts\IMSPartRepository.cs" />
+    <Compile Include="Contracts\IMTypeRepository.cs" />
+    <Compile Include="Contracts\ITReferenceRepository.cs" />
+    <Compile Include="Contracts\ITWOEmpRepository.cs" />
+    <Compile Include="Contracts\ITWOEquipRepository.cs" />
+    <Compile Include="Contracts\ITWOLogRepository.cs" />
+    <Compile Include="Contracts\ITWORepository.cs" />
+    <Compile Include="Contracts\ITWOSPartRepository.cs" />
+    <Compile Include="Contracts\ITWOStatusRepository.cs" />
+    <Compile Include="Contracts\ITWOTrackRepository.cs" />
+    <Compile Include="Contracts\Tasks\IMCityTasks.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Contracts\Tasks\IMCustomerTasks.cs" />
+    <Compile Include="Contracts\Tasks\IMEmpTasks.cs" />
+    <Compile Include="Contracts\Tasks\IMEquipTasks.cs" />
+    <Compile Include="Contracts\Tasks\IMMerkTasks.cs" />
+    <Compile Include="Contracts\Tasks\IMSPartTasks.cs" />
+    <Compile Include="Contracts\Tasks\IMTypeTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITReferenceTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITWOEmpTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITWOEquipTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITWOLogTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITWOSPartTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITWOStatusTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITWOTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITWOTrackTasks.cs" />
+    <Compile Include="MCity.cs" />
+    <Compile Include="VWoByEmp.cs" />
+    <Compile Include="MCustomer.cs" />
+    <Compile Include="MEmp.cs" />
+    <Compile Include="MEquip.cs" />
+    <Compile Include="MMerk.cs" />
+    <Compile Include="MSPart.cs" />
+    <Compile Include="MType.cs" />
     <Compile Include="MyEntity1.cs" />
+    <Compile Include="TReference.cs" />
+    <Compile Include="TWO.cs" />
+    <Compile Include="TWOEmp.cs" />
+    <Compile Include="TWOEquip.cs" />
+    <Compile Include="TWOHaveRead.cs" />
+    <Compile Include="TWOLog.cs" />
+    <Compile Include="TWOSPart.cs" />
+    <Compile Include="TWOStatus.cs" />
+    <Compile Include="TWOTrack.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -102,7 +154,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\Queries\" />
-    <Folder Include="Contracts\Tasks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YTech.SIS.GJCell.Enums\YTech.SIS.GJCell.Enums.csproj">
+      <Project>{9984c887-0804-4e94-9f26-56517ae8429a}</Project>
+      <Name>YTech.SIS.GJCell.Enums</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

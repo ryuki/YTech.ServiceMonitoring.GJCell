@@ -9,5 +9,15 @@
             return View();
         }
 
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
+        public ActionResult UnderConstruction()
+        {
+            return View();
+        }
+        
     }
 }

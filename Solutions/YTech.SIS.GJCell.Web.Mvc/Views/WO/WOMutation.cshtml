@@ -1,0 +1,23 @@
+﻿@model YTech.SIS.GJCell.Web.Mvc.Controllers.ViewModels.WOMutationViewModel
+
+@using (Html.BeginForm("WOMutation", "WO",FormMethod.Post, new { id = "formMutation" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.MutationWOId)
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+        <p>
+            @*<input type="submit" value="Submit" />*@
+            <a class="k-button k-button-icontext k-grid-update" style="min-width:20px;" href="#" id="btnSubmitMutation"><span class="k-icon k-update" ></span>Update</a>
+            <a class="k-button k-button-icontext k-grid-cancel" style="min-width:20px;" href="#" id="btnCancelMutation"><span class="k-icon k-cancel" ></span>Cancel</a>
+        </p>
+    <div id="result"></div>
+}
+

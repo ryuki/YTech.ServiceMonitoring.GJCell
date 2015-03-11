@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<div style="padding:0px"><img src="@Url.Content("~/Content/img/dashboard.png")" style="width:auto;height:auto;" /></div>*@
+
+<table border="0">
+    <tr>
+        <td>
+<div style="width:500px;height:440px;">
+    @(Html.Kendo().Chart<YTech.SIS.GJCell.Domain.VWoByEmp>()
+        .Name("chart")
+        .Title("Grafik Servis Per Teknisi")
+        .Legend(legend => legend
+            .Position(ChartLegendPosition.Bottom)
+        )
+        .DataSource(ds => ds.Read(read => read.Action("GetWoByEmp", "WO")))
+        .Series(series => {
+            series.Column(model => model.WoCount).Name("Baru_Masuk");
+            series.Column(model => model.WoCount).Name("Sedang_Dikerjakan");
+            series.Column(model => model.WoCount).Name("Selesai");
+        })
+        .CategoryAxis(axis => axis
+            .Categories(model => model.Id)
+            //.Labels(labels => labels.Rotation(-90))
+            .MajorGridLines(lines => lines.Visible(false))
+        )
+        .ValueAxis(axis => axis.Numeric()
+            .Labels(labels => labels.Format("{0:N0}"))
+            //.MajorUnit(10000)
+            .Line(line => line.Visible(false))
+        )
+        .Tooltip(tooltip => tooltip
+            .Visible(true)
+            .Format("{0:N0}")
+        )
+    ) 
+</div>
+
+        </td>
+        <td>
+            
+<div style="width:500px;height:440px;">
+    @(Html.Kendo().Chart<YTech.SIS.GJCell.Domain.VWoByEmp>()
+        .Name("chart")
+        .Title("Grafik Total Servis")
+        .Legend(legend => legend
+            .Position(ChartLegendPosition.Bottom)
+        )
+        .DataSource(ds => ds.Read(read => read.Action("GetWoByEmp", "WO")))
+        .Series(series => {
+            series.Column(model => model.WoCount).Name("Baru_Masuk");
+            series.Column(model => model.WoCount).Name("Sedang_Dikerjakan");
+            series.Column(model => model.WoCount).Name("Selesai");
+        })
+        .CategoryAxis(axis => axis
+            .Categories(model => model.Id)
+            //.Labels(labels => labels.Rotation(-90))
+            .MajorGridLines(lines => lines.Visible(false))
+        )
+        .ValueAxis(axis => axis.Numeric()
+            .Labels(labels => labels.Format("{0:N0}"))
+            //.MajorUnit(10000)
+            .Line(line => line.Visible(false))
+        )
+        .Tooltip(tooltip => tooltip
+            .Visible(true)
+            .Format("{0:N0}")
+        )
+    ) 
+</div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+<div style="width:300px;height:240px;">
+    <h2>Jumlah Servis</h2>
+@(Html.Kendo()
+.Grid<YTech.SIS.GJCell.Domain.VWoByEmp>()
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.WoLastStatus).Width("auto").Title("Status");
+        columns.Bound(p => p.WoCount).Width("auto").Title("Total RO").Width(60);
+    })
+    .HtmlAttributes(new { style = "height:150px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Batch(false)
+        .ServerOperation(false)
+        .Model(model => model.Id(p => p.Id))
+        .Read(read => read.Action("GetWoByEmp", "WO"))
+    )
+    )
+</div>
+
+        </td>
+        <td>
+<div style="width:300px;height:240px;">
+    <h2>Mutasi Unit Belum Dikonfirmasi</h2>
+@(Html.Kendo()
+.Grid<YTech.SIS.GJCell.Domain.VWoByEmp>()
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.WoLastStatus).Width("auto").Title("User");
+        columns.Bound(p => p.WoCount).Width("auto").Title("Total RO").Width(60);
+    })
+    .HtmlAttributes(new { style = "height:150px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Batch(false)
+        .ServerOperation(false)
+        .Model(model => model.Id(p => p.Id))
+        .Read(read => read.Action("GetWoByEmp", "WO"))
+    )
+    )
+</div>
+
+        </td>
+    </tr>
+</table>

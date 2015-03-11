@@ -1,0 +1,9 @@
+@model string
+           
+@(
+ Html.Kendo().DropDownListFor(m => m)  
+        .OptionLabel("-Pilih Tipe Konsumen-")
+        .DataValueField("Value")
+        .DataTextField("Text")     
+        .BindTo((System.Collections.IEnumerable)ViewData["customerType"])
+)

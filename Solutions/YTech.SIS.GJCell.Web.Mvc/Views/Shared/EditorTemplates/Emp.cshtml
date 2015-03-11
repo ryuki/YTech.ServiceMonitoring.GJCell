@@ -1,0 +1,16 @@
+﻿@model YTech.SIS.GJCell.Web.Mvc.Controllers.ViewModels.EmpViewModel
+
+@(Html.Kendo().DropDownListFor(m => m)
+        .OptionLabel("-Pilih Karyawan-")
+        .DataValueField("EmpID")
+        .DataTextField("EmpName")
+        //.BindTo((System.Collections.IEnumerable)ViewData["customers"])
+         .HtmlAttributes(new { @style="width:200px;" })
+         .AutoBind(false)
+         .DataSource(source => {
+              source.Read(read =>
+              {
+                  read.Action("PopulateEmps", "Emp");                  
+              });              
+          })
+)

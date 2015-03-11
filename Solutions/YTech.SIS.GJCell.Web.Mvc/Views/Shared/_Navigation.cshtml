@@ -1,0 +1,99 @@
+﻿@{ Layout = null; }
+@if (Request.IsAuthenticated) {
+@(Html.Kendo().PanelBar()
+    .Name("navigationPanelBar")
+    .Animation(true)
+    .ExpandMode(PanelBarExpandMode.Single)
+    .HighlightPath(true)
+    .SelectedIndex(0)
+    .HtmlAttributes(new { style = "font-weight:bold;" })
+    .Items(panels =>
+    {
+        panels.Add()
+             .Text("Dashboard")
+             .Action("Dashboard", "Home");
+        
+        panels.Add()
+           .Text("Master")
+           .Items(childPanels =>
+           {
+               childPanels.Add().Text("Kota").Action("Index", "City").HtmlAttributes(new { style = "font-weight:normal;" });
+               childPanels.Add().Text("Konsumen").Action("Index", "Customer").HtmlAttributes(new { style = "font-weight:normal;" });
+               childPanels.Add().Text("Karyawan").Action("Index", "Emp").HtmlAttributes(new { style = "font-weight:normal;" });
+               childPanels.Add().Text("Tipe Unit").Action("Index", "UnitType").HtmlAttributes(new { style = "font-weight:normal;" });
+               childPanels.Add().Text("Merk Unit").Action("Index", "UnitMerk").HtmlAttributes(new { style = "font-weight:normal;" });
+               childPanels.Add().Text("Spare Part").Action("Index", "SPart").HtmlAttributes(new { style = "font-weight:normal;" });
+               childPanels.Add().Text("Perlengkapan").Action("Index", "Equip").HtmlAttributes(new { style = "font-weight:normal;" });
+           });
+        
+        panels.Add()
+            .Text("Repair Order")
+            .Items(childPanels =>
+            {
+                childPanels.Add().Text("Daftar Repair Order")
+                    .Action("Index", "WO").HtmlAttributes(new { style = "font-weight:normal;" });
+                    //.Expanded(true)
+                    //.Items(cucuPanels =>
+                    //{
+                    //    cucuPanels.Add().Text("Aktif").Action("Index", "WO", new { lastStatus = "Aktif" }).HtmlAttributes(new { style = "font-weight:normal;" });
+                    //    cucuPanels.Add().Text("Closed").Action("Index", "WO", new { lastStatus = "Closed" }).HtmlAttributes(new { style = "font-weight:normal;" });
+                    //    cucuPanels.Add().Text("Semua").Action("Index", "WO").HtmlAttributes(new { style = "font-weight:normal;" });
+                    //}
+                    //);
+                childPanels.Add().Text("Update Repair Order").Action("UpdateStatus", "WO").HtmlAttributes(new { style = "font-weight:normal;" });
+            });
+
+
+        panels.Add()
+           .Text("Mutasi Unit")
+           .Items(childPanels =>
+           {
+               //childPanels.Add().Text("Mutasi Unit").Action("Index", "WO", new { mutation = "1" }).HtmlAttributes(new { style = "font-weight:normal;" });
+               childPanels.Add().Text("Daftar Terima Unit").Action("ApproveWOMutation", "WO").HtmlAttributes(new { style = "font-weight:normal;" });
+           });
+
+
+        panels.Add()
+           .Text("Spare Part")
+           .Items(childPanels =>
+           {
+               childPanels.Add().Text("Daftar Request Spare Part").Action("Index", "WOSPart").HtmlAttributes(new { style = "font-weight:normal;" });
+               //childPanels.Add().Text("Serah Terima Spare Part").Action("UnderConstruction", "Home").HtmlAttributes(new { style = "font-weight:normal;" });
+               //childPanels.Add().Text("Daftar Terima Spare Part").Action("UnderConstruction", "Home").HtmlAttributes(new { style = "font-weight:normal;" });
+           });
+        
+        
+        panels.Add()
+            .Text("Laporan")
+            .Items(childPanels =>
+            {
+                childPanels.Add().Text("Lap. Master")
+                //.HtmlAttributes(new { style = "font-weight:normal;" })
+                .Expanded(true)
+                .Items(cucuPanels =>
+                {
+                    cucuPanels.Add().Text("Master Konsumen").Action("Index", "Reports", new { rpt = YTech.SIS.GJCell.Enums.EnumReports.RptMasterCustomer }).HtmlAttributes(new { style = "font-weight:normal;" });
+                    cucuPanels.Add().Text("Master Karyawan").Action("Index", "Reports", new { rpt = YTech.SIS.GJCell.Enums.EnumReports.RptMasterEmp }).HtmlAttributes(new { style = "font-weight:normal;" });
+                    cucuPanels.Add().Text("Master Tipe Unit").Action("Index", "Reports", new { rpt = YTech.SIS.GJCell.Enums.EnumReports.RptMasterUnitType }).HtmlAttributes(new { style = "font-weight:normal;" });
+                    cucuPanels.Add().Text("Master Merk Unit").Action("Index", "Reports", new { rpt = YTech.SIS.GJCell.Enums.EnumReports.RptMasterUnitMerk }).HtmlAttributes(new { style = "font-weight:normal;" });
+                    cucuPanels.Add().Text("Master Spare Part").Action("Index", "Reports", new { rpt = YTech.SIS.GJCell.Enums.EnumReports.RptMasterSPart }).HtmlAttributes(new { style = "font-weight:normal;" });
+                    cucuPanels.Add().Text("Master Perlengkapan").Action("Index", "Reports", new { rpt = YTech.SIS.GJCell.Enums.EnumReports.RptMasterEquip }).HtmlAttributes(new { style = "font-weight:normal;" });
+                }
+                );
+
+                childPanels.Add().Text("Lap. Rekap Servis").Action("Index", "Reports", new { rpt = YTech.SIS.GJCell.Enums.EnumReports.RptWODailyRecap }).HtmlAttributes(new { style = "font-weight:normal;" });
+                childPanels.Add().Text("Lap. Detail Servis").Action("Index", "Reports", new { rpt = YTech.SIS.GJCell.Enums.EnumReports.RptWODailyRecap }).HtmlAttributes(new { style = "font-weight:normal;" });
+                childPanels.Add().Text("Lap. Pemakaian Spare Part").Action("Index", "Reports", new { rpt = YTech.SIS.GJCell.Enums.EnumReports.RptWOSpartUsed }).HtmlAttributes(new { style = "font-weight:normal;" });
+                childPanels.Add().Text("Lap. Lokasi Unit").Action("Index", "Reports", new { rpt = YTech.SIS.GJCell.Enums.EnumReports.RptWOTrack }).HtmlAttributes(new { style = "font-weight:normal;" });
+            });
+
+        panels.Add()
+            .Text("Utiliti")
+            .Items(childPanels =>
+            {
+                childPanels.Add().Text("Daftar User").Action("Index", "Account").HtmlAttributes(new { style = "font-weight:normal;" });
+                childPanels.Add().Text("Ganti Password").Action("ChangePassword", "Account").HtmlAttributes(new { style = "font-weight:normal;" });
+                childPanels.Add().Text("Backup Database").Action("UnderConstruction", "Home").HtmlAttributes(new { style = "font-weight:normal;" });
+            });
+    })
+)}

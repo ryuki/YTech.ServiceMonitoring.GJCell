@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Histori RO";
+}
+
+@(Html.Kendo()
+.Grid<YTech.SIS.GJCell.Web.Mvc.Controllers.ViewModels.WOViewModel>()
+    .Name("HistoriesWOGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.WONo).Width("85px");
+        columns.Bound(p => p.CustomerName).Width("auto");
+        columns.Bound(p => p.WODate).Format("{0:dd-MMM-yy}").Width("auto");
+        columns.Bound(p => p.WOUnitName).Width("auto");
+        columns.Bound(p => p.MerkName).Width("auto");
+        columns.Bound(p => p.WOUnitSn).Width("auto");
+        columns.Bound(p => p.WOStartDate).Format("{0:dd-MMM-yy}").Width("auto");
+        columns.Bound(p => p.WOLastStatus).Width("auto");
+        columns.Bound(p => p.WOUnitLastTrack).Width("auto");
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .ColumnMenu()
+    .Selectable()
+    .Filterable()
+    .Groupable()
+    .Resizable(resize => resize.Columns(true))
+    .Reorderable(reorder => reorder.Columns(true))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Batch(false)
+        .ServerOperation(false)
+        .Model(model => model.Id(p => p.WOID))
+        .Read(read => read.Action("WO_Read", "WO")
+    )
+    )
+)

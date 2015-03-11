@@ -1,0 +1,60 @@
+﻿@model YTech.SIS.GJCell.Web.Mvc.Controllers.ViewModels.RequestWOSPartViewModel
+
+@using (Html.BeginForm("RequestWOSPart", "WO", FormMethod.Post, new { id = "formWOSPart" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.WOSPartId)
+    @Html.HiddenFor(model => model.WOId)
+    
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WOSPartDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WOSPartDate)
+            @Html.ValidationMessageFor(model => model.WOSPartDate)
+        </div>
+    
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WOSPartRequestBy)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WOSPartRequestBy)
+            @Html.ValidationMessageFor(model => model.WOSPartRequestBy)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SPartId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SPartId)
+            @Html.ValidationMessageFor(model => model.SPartId)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WOSPartQty)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WOSPartQty)
+            @Html.ValidationMessageFor(model => model.WOSPartQty)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WOSPartPrice)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WOSPartPrice)
+            @Html.ValidationMessageFor(model => model.WOSPartPrice)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WOSPartTotal)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WOSPartTotal)
+            @Html.ValidationMessageFor(model => model.WOSPartTotal)
+        </div>
+        <p>
+            @*<input type="submit" value="Submit" />*@
+            <a class="k-button k-button-icontext k-grid-update" style="min-width:20px;" href="#" id="btnSubmitSPart"><span class="k-icon k-update" ></span>Update</a>
+            <a class="k-button k-button-icontext k-grid-cancel" style="min-width:20px;" href="#" id="btnCancelSPart"><span class="k-icon k-cancel" ></span>Cancel</a>
+        </p>
+    <div id="result"></div>
+}
+

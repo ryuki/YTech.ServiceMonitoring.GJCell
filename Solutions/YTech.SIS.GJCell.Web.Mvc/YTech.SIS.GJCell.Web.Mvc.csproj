@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -25,6 +26,15 @@
     <SccProvider>
     </SccProvider>
     <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,11 +69,28 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\..\Packages\Iesi.Collections.3.1.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Kendo.Mvc">
+      <HintPath>..\lib\KENDOUIMVC\2013.1.514.340\Kendo.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\Packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\Packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\JayaMesin\Solutions\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\JayaMesin\Solutions\lib\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -105,6 +132,7 @@
     <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ReferencedAssemblies\ASP.NET MVC\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -136,34 +164,380 @@
     <Compile Include="..\..\Common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Attributes\AllowAnonymousAttribute.cs" />
     <Compile Include="CastleWindsor\AutomappingConfiguration.cs" />
     <Compile Include="CastleWindsor\ComponentRegistrar.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\CustomerController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\EquipController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\UnitMerkController.cs" />
+    <Compile Include="Controllers\UnitTypeController.cs" />
+    <Compile Include="Controllers\EmpController.cs" />
+    <Compile Include="Controllers\SPartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RouteRegistrar.cs" />
+    <Compile Include="Controllers\ViewModels\AccountViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\CityViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\RequestWOSPartViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\ReportsViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\WOMutationViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\EquipViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\UnitMerkViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\UnitTypeViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\EmpViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\SPartViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\CustomerViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\WOSPartViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\WOStatusViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\WOViewModel.cs" />
+    <Compile Include="Controllers\WOController.cs" />
+    <Compile Include="Controllers\WOSPartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ReportViewer.aspx.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer.aspx.designer.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\img\dashboard.PNG" />
+    <Content Include="Content\img\error3.gif" />
+    <Content Include="Content\img\generic_link_16.png" />
+    <Content Include="Content\img\logo.PNG" />
+    <Content Include="Content\img\logo_new.png" />
+    <Content Include="Content\img\new_header.png" />
+    <Content Include="Content\img\rtg_print.gif" />
     <Content Include="Content\img\sharp_arch.jpg" />
     <Content Include="Content\img\sharp_arch_small.gif" />
+    <Content Include="Content\img\Web-under-construction-620x446.jpeg" />
+    <Content Include="Content\img\window16.gif" />
     <Content Include="Content\js\jquery-1.6.1.min.js" />
     <Content Include="Content\js\modernizr-1.7.min.js" />
+    <Content Include="Content\kendo\2013.1.514\Black\editor.png" />
+    <Content Include="Content\kendo\2013.1.514\Black\imagebrowser.png" />
+    <Content Include="Content\kendo\2013.1.514\Black\loading-image.gif" />
+    <Content Include="Content\kendo\2013.1.514\Black\loading.gif" />
+    <Content Include="Content\kendo\2013.1.514\Black\slider-h.gif" />
+    <Content Include="Content\kendo\2013.1.514\Black\slider-v.gif" />
+    <Content Include="Content\kendo\2013.1.514\Black\sprite.png" />
+    <Content Include="Content\kendo\2013.1.514\Black\sprite_2x.png" />
+    <Content Include="Content\kendo\2013.1.514\BlueOpal\editor.png" />
+    <Content Include="Content\kendo\2013.1.514\BlueOpal\imagebrowser.png" />
+    <Content Include="Content\kendo\2013.1.514\BlueOpal\loading-image.gif" />
+    <Content Include="Content\kendo\2013.1.514\BlueOpal\loading.gif" />
+    <Content Include="Content\kendo\2013.1.514\BlueOpal\slider-h.gif" />
+    <Content Include="Content\kendo\2013.1.514\BlueOpal\slider-v.gif" />
+    <Content Include="Content\kendo\2013.1.514\BlueOpal\sprite.png" />
+    <Content Include="Content\kendo\2013.1.514\BlueOpal\sprite_2x.png" />
+    <Content Include="Content\kendo\2013.1.514\Bootstrap\editor.png" />
+    <Content Include="Content\kendo\2013.1.514\Bootstrap\imagebrowser.png" />
+    <Content Include="Content\kendo\2013.1.514\Bootstrap\loading-image.gif" />
+    <Content Include="Content\kendo\2013.1.514\Bootstrap\loading.gif" />
+    <Content Include="Content\kendo\2013.1.514\Bootstrap\slider-h.gif" />
+    <Content Include="Content\kendo\2013.1.514\Bootstrap\slider-v.gif" />
+    <Content Include="Content\kendo\2013.1.514\Bootstrap\sprite.png" />
+    <Content Include="Content\kendo\2013.1.514\Bootstrap\sprite_2x.png" />
+    <Content Include="Content\kendo\2013.1.514\Default\editor.png" />
+    <Content Include="Content\kendo\2013.1.514\Default\imagebrowser.png" />
+    <Content Include="Content\kendo\2013.1.514\Default\loading-image.gif" />
+    <Content Include="Content\kendo\2013.1.514\Default\loading.gif" />
+    <Content Include="Content\kendo\2013.1.514\Default\slider-h.gif" />
+    <Content Include="Content\kendo\2013.1.514\Default\slider-v.gif" />
+    <Content Include="Content\kendo\2013.1.514\Default\sprite.png" />
+    <Content Include="Content\kendo\2013.1.514\Default\sprite_2x.png" />
+    <Content Include="Content\kendo\2013.1.514\HighContrast\editor.png" />
+    <Content Include="Content\kendo\2013.1.514\HighContrast\imagebrowser.png" />
+    <Content Include="Content\kendo\2013.1.514\HighContrast\loading-image.gif" />
+    <Content Include="Content\kendo\2013.1.514\HighContrast\loading.gif" />
+    <Content Include="Content\kendo\2013.1.514\HighContrast\slider-h.gif" />
+    <Content Include="Content\kendo\2013.1.514\HighContrast\slider-v.gif" />
+    <Content Include="Content\kendo\2013.1.514\HighContrast\sprite.png" />
+    <Content Include="Content\kendo\2013.1.514\HighContrast\sprite_2x.png" />
+    <Content Include="Content\kendo\2013.1.514\images\back.png" />
+    <Content Include="Content\kendo\2013.1.514\images\wp8_icons.png" />
+    <Content Include="Content\kendo\2013.1.514\images\wp8_inverseicons.png" />
+    <Content Include="Content\kendo\2013.1.514\kendo.black.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.blueopal.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.bootstrap.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.common.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.black.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.blueopal.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.bootstrap.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.default.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.highcontrast.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.metro.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.metroblack.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.moonlight.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.silver.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.dataviz.uniform.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.default.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.highcontrast.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.icenium.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.metro.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.metroblack.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.mobile.all.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.mobile.android4.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.mobile.blackberry.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.mobile.common.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.mobile.ios.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.mobile.meego.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.mobile.wp8.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.moonlight.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.rtl.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.silver.min.css" />
+    <Content Include="Content\kendo\2013.1.514\kendo.uniform.min.css" />
+    <Content Include="Content\kendo\2013.1.514\MetroBlack\editor.png" />
+    <Content Include="Content\kendo\2013.1.514\MetroBlack\imagebrowser.png" />
+    <Content Include="Content\kendo\2013.1.514\MetroBlack\loading-image.gif" />
+    <Content Include="Content\kendo\2013.1.514\MetroBlack\loading.gif" />
+    <Content Include="Content\kendo\2013.1.514\MetroBlack\slider-h.gif" />
+    <Content Include="Content\kendo\2013.1.514\MetroBlack\slider-v.gif" />
+    <Content Include="Content\kendo\2013.1.514\MetroBlack\sprite.png" />
+    <Content Include="Content\kendo\2013.1.514\MetroBlack\sprite_2x.png" />
+    <Content Include="Content\kendo\2013.1.514\Metro\editor.png" />
+    <Content Include="Content\kendo\2013.1.514\Metro\imagebrowser.png" />
+    <Content Include="Content\kendo\2013.1.514\Metro\loading-image.gif" />
+    <Content Include="Content\kendo\2013.1.514\Metro\loading.gif" />
+    <Content Include="Content\kendo\2013.1.514\Metro\slider-h.gif" />
+    <Content Include="Content\kendo\2013.1.514\Metro\slider-v.gif" />
+    <Content Include="Content\kendo\2013.1.514\Metro\sprite.png" />
+    <Content Include="Content\kendo\2013.1.514\Metro\sprite_2x.png" />
+    <Content Include="Content\kendo\2013.1.514\Moonlight\editor.png" />
+    <Content Include="Content\kendo\2013.1.514\Moonlight\imagebrowser.png" />
+    <Content Include="Content\kendo\2013.1.514\Moonlight\loading-image.gif" />
+    <Content Include="Content\kendo\2013.1.514\Moonlight\loading.gif" />
+    <Content Include="Content\kendo\2013.1.514\Moonlight\slider-h.gif" />
+    <Content Include="Content\kendo\2013.1.514\Moonlight\slider-v.gif" />
+    <Content Include="Content\kendo\2013.1.514\Moonlight\sprite.png" />
+    <Content Include="Content\kendo\2013.1.514\Moonlight\sprite_2x.png" />
+    <Content Include="Content\kendo\2013.1.514\Silver\editor.png" />
+    <Content Include="Content\kendo\2013.1.514\Silver\imagebrowser.png" />
+    <Content Include="Content\kendo\2013.1.514\Silver\loading-image.gif" />
+    <Content Include="Content\kendo\2013.1.514\Silver\loading.gif" />
+    <Content Include="Content\kendo\2013.1.514\Silver\slider-h.gif" />
+    <Content Include="Content\kendo\2013.1.514\Silver\slider-v.gif" />
+    <Content Include="Content\kendo\2013.1.514\Silver\sprite.png" />
+    <Content Include="Content\kendo\2013.1.514\Silver\sprite_2x.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\brushed-metal.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots1.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots10.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots11.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots12.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots13.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots2.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots3.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots4.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots5.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots6.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots7.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots8.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\dots9.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\glass-lighter.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\glass.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\highlight.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\hsv-gradient.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\hue.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\leather1.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\leather2.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\noise.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\stripe1.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\stripe2.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\stripe3.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\stripe4.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\stripe5.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\stripe6.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\transparency.png" />
+    <Content Include="Content\kendo\2013.1.514\textures\transtexture.png" />
+    <Content Include="Content\kendo\2013.1.514\Uniform\editor.png" />
+    <Content Include="Content\kendo\2013.1.514\Uniform\imagebrowser.png" />
+    <Content Include="Content\kendo\2013.1.514\Uniform\loading-image.gif" />
+    <Content Include="Content\kendo\2013.1.514\Uniform\loading.gif" />
+    <Content Include="Content\kendo\2013.1.514\Uniform\slider-h.gif" />
+    <Content Include="Content\kendo\2013.1.514\Uniform\slider-v.gif" />
+    <Content Include="Content\kendo\2013.1.514\Uniform\sprite.png" />
+    <Content Include="Content\kendo\2013.1.514\Uniform\sprite_2x.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\js\jquery-1.6.1-vsdoc.js" />
     <Content Include="Content\js\jquery-1.6.1.js" />
     <Content Include="Content\js\modernizr-1.7.js" />
+    <None Include="Properties\PublishProfiles\GJCell - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\GJCell - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\PublishToDev.pubxml" />
+    <None Include="Scripts\jquery-1.9.1-vsdoc.js" />
+    <Content Include="ReportViewer.aspx" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\kendo.modernizr.custom.js" />
+    <Content Include="Scripts\kendo\2013.1.514\jquery.min.js" />
+    <Content Include="Content\kendo\2013.1.514\images\KendoUI.ttf" />
+    <Content Include="Content\kendo\2013.1.514\images\KendoUI.woff" />
+    <None Include="Scripts\kendo\2013.1.514\kendo.all-vsdoc.js" />
+    <None Include="Scripts\kendo\2013.1.514\kendo.all.min.intellisense.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.all.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.aspnetmvc.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.autocomplete.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.binder.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.calendar.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.colorpicker.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.columnmenu.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.combobox.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.core.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.data.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.data.odata.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.data.xml.min.js" />
+    <None Include="Scripts\kendo\2013.1.514\kendo.dataviz-vsdoc.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.dataviz.chart.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.dataviz.core.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.dataviz.gauge.min.js" />
+    <None Include="Scripts\kendo\2013.1.514\kendo.dataviz.min.intellisense.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.dataviz.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.dataviz.sparkline.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.dataviz.stock.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.dataviz.svg.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.dataviz.themes.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.dataviz.vml.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.datepicker.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.datetimepicker.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.draganddrop.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.dropdownlist.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.editable.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.editor.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.filtermenu.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.fx.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.grid.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.groupable.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.imagebrowser.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.list.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.listview.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.menu.min.js" />
+    <None Include="Scripts\kendo\2013.1.514\kendo.mobile-vsdoc.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.actionsheet.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.application.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.button.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.buttongroup.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.listview.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.loader.min.js" />
+    <None Include="Scripts\kendo\2013.1.514\kendo.mobile.min.intellisense.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.modalview.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.navbar.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.pane.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.popover.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.scroller.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.scrollview.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.shim.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.splitview.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.switch.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.tabstrip.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.mobile.view.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.multiselect.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.numerictextbox.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.pager.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.panelbar.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.popup.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.reorderable.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.resizable.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.router.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.selectable.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.slider.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.sortable.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.splitter.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.tabstrip.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.timepicker.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.tooltip.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.touch.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.treeview.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.upload.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.userevents.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.validator.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.view.min.js" />
+    <None Include="Scripts\kendo\2013.1.514\kendo.web-vsdoc.js" />
+    <None Include="Scripts\kendo\2013.1.514\kendo.web.min.intellisense.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.web.min.js" />
+    <Content Include="Scripts\kendo\2013.1.514\kendo.window.min.js" />
+    <Content Include="Scripts\Layout.js" />
+    <Content Include="Scripts\Navigation.js" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LogOn.cshtml" />
+    <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\Shared\_title.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Account\EditorTemplates\_Role.cshtml" />
+    <Content Include="Views\Account\EditorTemplates\_User.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\WO\EditorTemplates\Priority.cshtml" />
+    <Content Include="Views\WO\EditorTemplates\SCToko.cshtml" />
+    <Content Include="Views\WO\EditorTemplates\UpdateWO.cshtml" />
+    <Content Include="Views\WO\EditorTemplates\WO.cshtml" />
+    <Content Include="Views\WO\EditorTemplates\WOStatus.cshtml" />
+    <Content Include="Views\WO\GetWONo.cshtml" />
+    <Content Include="Views\WO\Index.cshtml" />
+    <Content Include="Views\WO\UpdateStatus.cshtml" />
+    <Content Include="Views\Shared\ColourLegend.cshtml" />
+    <Content Include="Views\Shared\_CountDown.cshtml" />
+    <Content Include="Views\Shared\_NoMenuLayout.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Bool.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Customer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TextArea.cshtml" />
+    <Content Include="Views\Home\UnderConstruction.cshtml" />
+    <Content Include="Views\SPart\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CustomerType.cshtml" />
+    <Content Include="Views\Emp\Index.cshtml" />
+    <Content Include="Views\UnitType\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UnitMerk.cshtml" />
+    <Content Include="Views\UnitMerk\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
+    <Content Include="Views\Equip\Index.cshtml" />
+    <Content Include="Views\WO\WOMutation.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UserName.cshtml" />
+    <Content Include="Views\WO\ApproveWOMutation.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UnitType.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\WO\RequestWOSPart.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SPart.cshtml" />
+    <Content Include="Views\WO\Histories.cshtml" />
+    <Content Include="Views\City\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\City.cshtml" />
+    <Content Include="Views\WOSPart\Index.cshtml" />
+    <Content Include="Views\WOSPart\ChangeStatus.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Emp.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\WOSPartStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YTech.SIS.GJCell.Domain\YTech.SIS.GJCell.Domain.csproj">
       <Project>{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}</Project>
       <Name>YTech.SIS.GJCell.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YTech.SIS.GJCell.Enums\YTech.SIS.GJCell.Enums.csproj">
+      <Project>{9984c887-0804-4e94-9f26-56517ae8429a}</Project>
+      <Name>YTech.SIS.GJCell.Enums</Name>
     </ProjectReference>
     <ProjectReference Include="..\YTech.SIS.GJCell.Infrastructure\YTech.SIS.GJCell.Infrastructure.csproj">
       <Project>{9544D94B-9B6E-4B61-8A09-88382205BF86}</Project>
@@ -179,14 +553,57 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Queries\" />
-    <Folder Include="Controllers\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptPrintWOFactur.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptWODailyRecap.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptMasterCustomer.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptMasterEmp.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptMasterSPart.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptMasterUnitMerk.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptMasterUnitType.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptWOTrack.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptWOSpartUsed.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptPrintWOFacturAdvan.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptPrintWOFacturEvercoss.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptPrintWOFacturGJCell-old.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reports\RptPrintWOFacturGJCell.rdlc" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -201,16 +618,16 @@
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51949</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <DevelopmentServerVPath>/SIS</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>http://localhost:81/SIS</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties UseCdnSupport="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

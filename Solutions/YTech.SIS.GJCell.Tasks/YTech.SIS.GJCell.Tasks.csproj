@@ -86,11 +86,28 @@
     <Compile Include="..\..\Common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="MCityTasks.cs" />
+    <Compile Include="TWOSPartTasks.cs" />
+    <Compile Include="TWOTrackTasks.cs" />
+    <Compile Include="MEquipTasks.cs" />
+    <Compile Include="MMerkTasks.cs" />
+    <Compile Include="MTypeTasks.cs" />
+    <Compile Include="MEmpTasks.cs" />
+    <Compile Include="MSPartTasks.cs" />
+    <Compile Include="MCustomerTasks.cs" />
+    <Compile Include="TReferenceTasks.cs" />
+    <Compile Include="TWOLogTasks.cs" />
+    <Compile Include="TWOStatusTasks.cs" />
+    <Compile Include="TWOTasks.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YTech.SIS.GJCell.Domain\YTech.SIS.GJCell.Domain.csproj">
       <Project>{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}</Project>
       <Name>YTech.SIS.GJCell.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YTech.SIS.GJCell.Enums\YTech.SIS.GJCell.Enums.csproj">
+      <Project>{9984c887-0804-4e94-9f26-56517ae8429a}</Project>
+      <Name>YTech.SIS.GJCell.Enums</Name>
     </ProjectReference>
     <ProjectReference Include="..\YTech.SIS.GJCell.Infrastructure\YTech.SIS.GJCell.Infrastructure.csproj">
       <Project>{9544D94B-9B6E-4B61-8A09-88382205BF86}</Project>

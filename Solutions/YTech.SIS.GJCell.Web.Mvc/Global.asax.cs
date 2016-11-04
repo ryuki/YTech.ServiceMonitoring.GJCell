@@ -103,8 +103,7 @@
             NHibernateSession.Init(
                 this.webSessionStorage,
                 new[] { Server.MapPath("~/bin/YTech.SIS.GJCell.Infrastructure.dll") },
-                new AutoPersistenceModelGenerator().Generate(),
-                Server.MapPath("~/NHibernate.config"));
+                new AutoPersistenceModelGenerator().Generate());
         }
     }
 }

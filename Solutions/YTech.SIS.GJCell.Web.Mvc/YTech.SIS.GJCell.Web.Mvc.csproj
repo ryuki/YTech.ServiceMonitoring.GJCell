@@ -529,6 +529,12 @@
     <Content Include="Views\WOSPart\ChangeStatus.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Emp.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\WOSPartStatus.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YTech.SIS.GJCell.Domain\YTech.SIS.GJCell.Domain.csproj">
@@ -547,9 +553,6 @@
       <Project>{C9AAC14B-E695-4508-83B7-ACB8FC5A7284}</Project>
       <Name>YTech.SIS.GJCell.Tasks</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="NHibernate.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Queries\" />
@@ -617,7 +620,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>51949</DevelopmentServerPort>
+          <DevelopmentServerPort>3870</DevelopmentServerPort>
           <DevelopmentServerVPath>/SIS</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
